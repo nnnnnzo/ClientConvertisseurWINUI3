@@ -15,6 +15,7 @@ namespace ClientConvertisseurV1.Services
     {
         private System.Net.Http.HttpClient client;
         public WSService(string url) {
+            client = new System.Net.Http.HttpClient();
             client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

@@ -22,7 +22,7 @@
             Width="150"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.Below="montantLabel"
-            Text="" />
+            Text="{Binding Montant, Mode=TwoWay}" />
         <TextBlock
             Name="deviseLabel"
             Margin="0,25"
@@ -32,8 +32,11 @@
         <ComboBox
             Name="comboDevise"
             Width="150"
+            ItemsSource="{Binding LesDevises}"
+            DisplayMemberPath="NomDevise"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
-            RelativePanel.Below="deviseLabel" />
+            RelativePanel.Below="deviseLabel"
+            SelectedItem="{Binding SelectedDevise}" />
 
         <Button
             Name="buttonConvert"
@@ -54,7 +57,7 @@
             Margin="0,25"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.Below="montantConvertLabel"
-            Text="" />
+            Text="{Binding ConvertedAmount}" />
 
     </RelativePanel>
 </Page>
