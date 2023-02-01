@@ -91,7 +91,8 @@ namespace ClientConvertisseurV1.Views
             List<Devise> result = await service.GetDevisesAsync("devises");
             if(result == null)
             {
-               return;
+                DisplayNoAPIDialog();
+                return;
             }
             else
             {
@@ -101,7 +102,42 @@ namespace ClientConvertisseurV1.Views
 
         private void buttonConvert_Click(object sender, RoutedEventArgs e)
         {
-            ConvertedAmount = Montant * SelectedDevise.Taux;
+            if (SelectedDevise != null)
+            {
+                ConvertedAmount = Montant * SelectedDevise.Taux;
+            }
+            else
+            {
+                DisplayNoDeviseDialog();
+            }
+        }
+
+        private async void DisplayNoAPIDialog()
+        {
+            ContentDialog noAPIDialog = new ContentDialog
+            {
+                Title = "Erreur API",
+                Content = "API non disponible pour le moment ! Réessayez plus tard.",
+                CloseButtonText = "Ok"
+            };
+
+            noAPIDialog.XamlRoot = this.Content.XamlRoot;
+
+            ContentDialogResult result = await noAPIDialog.ShowAsync();
+        }
+
+        private async void DisplayNoDeviseDialog()
+        {
+            ContentDialog noDeviseDialog = new ContentDialog
+            {
+                Title = "Erreur",
+                Content = "Vous devez sélectionner une devise.",
+                CloseButtonText = "Oui Monsieur"
+            };
+
+            noDeviseDialog.XamlRoot = this.Content.XamlRoot;
+
+            ContentDialogResult result = await noDeviseDialog.ShowAsync();
         }
     }
 }
