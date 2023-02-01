@@ -42,7 +42,7 @@ namespace ClientConvertisseurV1.Views
         public ObservableCollection<Devise> LesDevises
         {
             get { return lesDevises; }
-            set { lesDevises = value; OnPropertyChanged("LesDevise"); }
+            set { lesDevises = value; OnPropertyChanged("LesDevises"); }
         }
 
         private Devise selectedDevise;
@@ -54,6 +54,26 @@ namespace ClientConvertisseurV1.Views
             get { return selectedDevise; }
             set { selectedDevise = value; OnPropertyChanged(nameof(selectedDevise)); }
         }
+
+        private double montant;
+
+        public double Montant
+        {
+            get { return montant; }
+            set { montant = value; OnPropertyChanged(nameof(montant)); }
+        }
+
+        private double convertedAmount;
+
+        public double ConvertedAmount
+        {
+            get { return convertedAmount; }
+            set { convertedAmount = value; OnPropertyChanged("ConvertedAmount"); }
+        }
+
+
+
+
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -67,7 +87,7 @@ namespace ClientConvertisseurV1.Views
 
         public async void GetDataOnLoadAsync()
         {
-            WSService service = new WSService("http://localhost:7063/api/");
+            WSService service = new WSService("https://localhost:7063/api/");
             List<Devise> result = await service.GetDevisesAsync("devises");
             if(result == null)
             {
@@ -77,6 +97,11 @@ namespace ClientConvertisseurV1.Views
             {
                 LesDevises = new ObservableCollection<Devise>(result);
             }
+        }
+
+        private void buttonConvert_Click(object sender, RoutedEventArgs e)
+        {
+            ConvertedAmount = Montant * SelectedDevise.Taux;
         }
     }
 }
